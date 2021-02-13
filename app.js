@@ -1,46 +1,56 @@
 const quiz = [
   {
-    question: 'ゲーム史上、最も売れたゲーム機は次のうちどれ？',
+    question: '新撰組局長として活躍し戊辰戦争で敗れ処刑された人物は誰？',
     answers: [
-      'スーパーファミコン',
-      'プレイステーション2',
-      'ニンテンドースイッチ',
-      'ニンテンドーDS',
+      '土方歳三',
+      '近藤勇',
+      '永倉新八',
+      '沖田総司',
     ],
-    correct: 'ニンテンドーDS'
+    correct: '近藤勇'
   }, {
-    question: 'ゲーム史上、最も売れたゲーム機は次のうちどれ？',
+    question: '宮本武蔵と佐々木小次郎が決闘をした島はどこでしょう？',
     answers: [
-      'スーパーファミコン',
-      'プレイステーション2',
-      'ニンテンドースイッチ',
-      'ニンテンドーDS',
+      '巌流島',
+      '沖ノ鳥島',
+      'DASH島',
+      '利尻島',
     ],
-    correct: 'ニンテンドーDS'
+    correct: '巌流島'
   }, {
-    question: 'ゲーム史上、最も売れたゲーム機は次のうちどれ？',
+    question: '「銀閣寺」の名前の由来はどれ？',
     answers: [
-      'スーパーファミコン',
-      'プレイステーション2',
-      'ニンテンドースイッチ',
-      'ニンテンドーDS',
+      '「金閣寺」に名前を合わせた',
+      '建築材料の一部に「銀」が使われていたから',
+      '最初は銀ぱくが貼られていたから',
+      '銀ぱくを貼る予定で作られたから',
     ],
-    correct: 'ニンテンドーDS'
+    correct: '銀ぱくを貼る予定で作られたから'
+  }, {
+    question: '日本のお金の単位が「円」になったのはいつから？',
+    answers: [
+      '明治4年',
+      '大正4年',
+      '昭和4年',
+      '平成4年',
+    ],
+    correct: '明治4年'
   }
 ];
 
 const quizLength = quiz.length;
 let quizIndex = 0;
+let score = 0;
 
 const $button = document.getElementsByTagName('button');
 const buttonLength = $button.length;
 
 // クイズの問題文、選択肢を定義
 const setupQuiz = () => {
-  document.getElementById('js-question').textContent = question;
+  document.getElementById('js-question').textContent = quiz[quizIndex].question;
   let buttonIndex = 0;
   while(buttonIndex < buttonLength){
-    $button[buttonIndex].textContent = answers[buttonIndex];
+    $button[buttonIndex].textContent = quiz[quizIndex].answers[buttonIndex];
     buttonIndex++;
   }
 };
@@ -48,10 +58,21 @@ const setupQuiz = () => {
 setupQuiz();
 
 const clickHandler = (e) => {
-  if(correct === e.target.textContent){
+  if(quiz[quizIndex].correct === e.target.textContent){
     window.alert('正解！');
+    score++;
   } else {
     window.alert('不正解！');
+  }
+
+  quizIndex++;
+
+  if(quizIndex < quizLength){
+    //問題数がまだあればこちらを実行
+    setupQuiz();
+  } else {
+    //問題数がもうなければこちらを実行
+    window.alert('終了！あなたの正解数は'　+ score + '/' + quizLength + 'です！');
   }
 };
 
